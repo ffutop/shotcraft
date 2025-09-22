@@ -1,0 +1,27 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<title>Image Editor Logo V4 (Final)</title>
+<defs>
+  <linearGradient id="layered-view-gradient-final" x1="20" y1="30" x2="180" y2="170" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#6366F1"/>
+    <stop offset="0.5" stop-color="#A855F7"/>
+    <stop offset="1" stop-color="#EC4899"/>
+  </linearGradient>
+</defs>
+<g opacity="0.6">
+<rect x="30" y="20" width="140" height="140" rx="30" fill="url(#layered-view-gradient-final)"/>
+</g>
+<g opacity="0.8">
+<rect x="40" y="30" width="140" height="140" rx="30" fill="url(#layered-view-gradient-final)"/>
+</g>
+<rect x="50" y="40" width="140" height="140" rx="30" fill="url(#layered-view-gradient-final)"/>
+<!-- Beveled Aperture -->
+<g transform="translate(120, 130)">
+    <!-- Shadow/Base Layer -->
+    <circle cx="0" cy="0" r="30" fill="#000000" fill-opacity="0.1"/>
+    <!-- Main Fill Layer -->
+    <circle cx="0" cy="0" r="30" fill="white" transform="translate(0, -1)"/>
+    <!-- Inner Hole -->
+    <circle cx="0" cy="0" r="20" fill="#000000" fill-opacity="0.1" transform="translate(0, 1)"/>
+    <circle cx="0" cy="0" r="20" fill="url(#layered-view-gradient-final)"/>
+</g>
+</svg>
