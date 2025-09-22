@@ -1,0 +1,12 @@
+<svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+<title>Image Editor Color Logo</title>
+<defs>
+  <linearGradient id="creative-gradient" x1="0" y1="100" x2="200" y2="100" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#6366F1"/>
+    <stop offset="0.5" stop-color="#A855F7"/>
+    <stop offset="1" stop-color="#EC4899"/>
+  </linearGradient>
+</defs>
+<path d="M160 20H40C28.9543 20 20 28.9543 20 40V160C20 171.046 28.9543 180 40 180H160C171.046 180 180 171.046 180 160V40C180 28.9543 171.046 20 160 20Z" fill="#1A1A1A"/>
+<path d="M119.589 45.7949C132.581 50.5544 138.077 52.9341 141.521 58.8153C145.463 65.5246 145.463 73.9694 141.521 80.6787C138.077 86.5599 132.581 88.9396 119.589 93.7001L93.7001 103.411C88.9396 105.831 86.5599 107.041 83.6787 109.479C77.2828 114.862 77.2828 124.138 83.6787 129.521C86.5599 131.959 88.9396 133.169 93.7001 135.589L119.589 145.299C132.581 150.06 138.077 152.44 141.521 158.321C145.463 165.03 145.463 173.475 141.521 180.185C138.077 186.066 132.581 188.446 119.589 193.205" stroke="url(#creative-gradient)" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
