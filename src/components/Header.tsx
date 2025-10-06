@@ -22,11 +22,11 @@ import { type ReactElement } from 'react';
 export type Tool = 'Square' | 'Circle' | 'Line' | 'Arrow' | 'Pencil' | 'Move';
 
 const toolList: { name: Tool; icon: ReactElement; tooltip: string }[] = [
-  { name: 'Square', icon: <Square size={16} />, tooltip: '矩形' },
-  { name: 'Circle', icon: <Circle size={16} />, tooltip: '圆形' },
-  { name: 'Line', icon: <Slash size={16} />, tooltip: '直线' },
-  { name: 'Arrow', icon: <MoveDownLeft size={16} />, tooltip: '箭头' },
-  { name: 'Pencil', icon: <Pencil size={16} />, tooltip: '画笔' },
+  { name: 'Square', icon: <Square size={16} />, tooltip: 'Square' },
+  { name: 'Circle', icon: <Circle size={16} />, tooltip: 'Circle' },
+  { name: 'Line', icon: <Slash size={16} />, tooltip: 'Line' },
+  { name: 'Arrow', icon: <MoveDownLeft size={16} />, tooltip: 'Arrow' },
+  { name: 'Pencil', icon: <Pencil size={16} />, tooltip: 'Pencil' },
 ];
 
 interface HeaderProps {
@@ -91,7 +91,7 @@ function Header({ activeTool, onToolSelect }: HeaderProps) {
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>移动画布</p>
+              <p>Move Canvas</p>
             </TooltipContent>
           </Tooltip>
         </div>
@@ -104,11 +104,11 @@ function Header({ activeTool, onToolSelect }: HeaderProps) {
               <Button variant="ghost" size="icon" onClick={toggleTheme}>
                 <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
                 <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
-                <span className="sr-only">切换主题</span>
+                <span className="sr-only">Toggle Theme</span>
               </Button>
             </TooltipTrigger>
             <TooltipContent>
-              <p>切换主题</p>
+              <p>Toggle Theme</p>
             </TooltipContent>
           </Tooltip>
         </TooltipProvider>
