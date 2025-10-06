@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import {
   ChevronRight,
   Download,
   Copy,
+  Crop,
   Settings2,
   Trash2,
   FlipHorizontal,
@@ -22,6 +23,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { SegmentedControl, SegmentedControlItem, SegmentedControlList } from '@/components/ui/segmented-control';
 import { toDownloadFile } from '@/lib/utils';
+import CropDialog from '@/components/CropDialog';
 import { toast } from 'sonner';
 
 // No more props needed!
@@ -29,10 +31,12 @@ const Sidebar = () => {
   // Get all necessary state and actions from the store
   const {
     artboard,
+    mockup,
     contentScale,
     updateArtboard,
     setArtboardBackground,
     setContentScale,
+    setCroppedContent,
     flipContent,
     app,
     content,
@@ -43,6 +47,7 @@ const Sidebar = () => {
   const [exportFormat, setExportFormat] = useState('png');
   const [exportRatio, setExportRatio] = useState(1);
 
+  const [isCropDialogOpen, setIsCropDialogOpen] = useState(false);
   const handleDownload = async () => {
     if (!app || loading) return;
 
@@ -115,10 +120,26 @@ const Sidebar = () => {
     });
   };
 
+  const handleCropComplete = (croppedImage: string) => {
+    // Use the new action to only update the displayed src
+    setCroppedContent(croppedImage);
+    setIsCropDialogOpen(false);
+  };
+
+  const cropAspect = useMemo(() => {
+    if (mockup) {
+      return mockup.contentArea.width / mockup.contentArea.height;
+    }
+    if (artboard.width > 0 && artboard.height > 0) {
+      return artboard.width / artboard.height;
+    }
+    return 16 / 9; // Default fallback
+  }, [mockup, artboard.width, artboard.height]);
 
   const [showMoreBackgrounds, setShowMoreBackgrounds] = useState(false);
 
   return (
+    <>
     <aside className="w-[340px] border-l flex flex-col bg-background shadow-lg select-none">
       <div className="flex-1 flex flex-col gap-4 p-4 overflow-y-auto">
         {/* SizeBar - Now driven by the store */}
@@ -203,18 +224,18 @@ const Sidebar = () => {
           <Label className="font-semibold text-sm">Quick</Label>
           <div className="flex gap-4 items-center py-2">
             <TooltipProvider>
-              {/* <Tooltip>
+              <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon">
+                  <Button variant="ghost" size="icon" onClick={() => setIsCropDialogOpen(true)} disabled={!content}>
                     <Crop size={18} />
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>Crop Image</TooltipContent>
-              </Tooltip> */}
+              </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
                   {/* Connect flip buttons to the store action */}
-                  <Button variant="ghost" size="icon" onClick={() => flipContent('horizontal')}>
+                  <Button variant="ghost" size="icon" onClick={() => flipContent('horizontal')} disabled={!content}>
                     <FlipHorizontal size={18} />
                   </Button>
                 </TooltipTrigger>
@@ -222,7 +243,7 @@ const Sidebar = () => {
               </Tooltip>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="ghost" size="icon" onClick={() => flipContent('vertical')}>
+                  <Button variant="ghost" size="icon" onClick={() => flipContent('vertical')} disabled={!content}>
                     <FlipVertical size={18} />
                   </Button>
                 </TooltipTrigger>
@@ -334,6 +355,15 @@ const Sidebar = () => {
         </TooltipProvider>
       </div>
     </aside>
+    {isCropDialogOpen && content && (
+      <CropDialog
+        src={content.originalSrc}
+        aspect={cropAspect}
+        onCropComplete={handleCropComplete}
+        onClose={() => setIsCropDialogOpen(false)}
+      />
+    )}
+    </>
   );
 };
 

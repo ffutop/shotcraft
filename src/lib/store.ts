@@ -31,6 +31,7 @@ export interface Mockup {
 
 export interface Content {
   src: string;
+  originalSrc: string;
   element?: LeaferImage;
 }
 
@@ -49,11 +50,12 @@ interface EditorState {
   destroy: () => void;
 
   // Actions
-  updateArtboard: (config: Partial<Artboard>) => void;
+  updateArtboard: (config: Partial<Artboard>) => void; 
   setArtboardBackground: (key: string, fill: IFill) => void;
   setMockup: (mockup: Mockup | null) => void;
-  setContent: (content: Content | null) => void;
+  setContent: (content: { src: string, originalSrc?: string } | null) => void;
   setContentScale: (scale: number) => void;
+  setCroppedContent: (croppedSrc: string) => void;
   flipContent: (direction: 'horizontal' | 'vertical') => void;
   addShape: (shape: IShape) => void;
   updateShape: (shape: Partial<IShape> & { id: string }) => void;
@@ -62,8 +64,7 @@ interface EditorState {
   setExportMultiplier: (multiplier: number) => void;
   setApp: (app: LeaferApp) => void;
 }
-
-export const useEditorStore = create<EditorState>((set) => ({
+export const useEditorStore = create<EditorState>((set, get) => ({
   // Initial State
   artboard: {
     width: 1920,
@@ -98,8 +99,23 @@ export const useEditorStore = create<EditorState>((set) => ({
       };
     }),
   setMockup: (mockup) => set({ mockup }),
-  setContent: (content) => set({ content }),
+  setContent: (newContent) => {
+    if (newContent === null) {
+      set({ content: null });
+    } else {
+      set({
+        content: {
+          src: newContent.src,
+          originalSrc: newContent.originalSrc || newContent.src,
+        }
+      });
+    }
+  },
   setContentScale: (scale) => set({ contentScale: scale }),
+  setCroppedContent: (croppedSrc) => set((state) => {
+    if (!state.content) return {};
+    return { content: { ...state.content, src: croppedSrc } };
+  }),
   flipContent: (direction) =>
     set((state) => ({
       contentFlip: {
