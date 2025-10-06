@@ -48,7 +48,7 @@ function App() {
     <div className={cn('flex flex-col h-screen w-screen overflow-hidden antialiased bg-background text-foreground', theme)}>
       <Header activeTool={activeTool} onToolSelect={handleToolSelect} />
       <div className="flex flex-1 h-0">
-        <main className="flex-1 flex items-center justify-center bg-gray-50">
+        <main className="flex-1 flex items-center justify-center bg-muted">
           {content ? (
             <Canvas
               activeTool={activeTool}
